@@ -30,7 +30,6 @@ public class FornecedorService {
         Fornecedor exeistence = findByID(id);
         exeistence.setNome_fantasia(novoFornecedor.getNome_fantasia());
         exeistence.setCnpj(novoFornecedor.getCnpj());
-        exeistence.setContato_responsavel(novoFornecedor.getContato_responsavel());
         exeistence.setInscricao_estadual(novoFornecedor.getInscricao_estadual());
         exeistence.setRazao_social(novoFornecedor.getRazao_social());
         exeistence.setInscricao_municipal(novoFornecedor.getInscricao_municipal());

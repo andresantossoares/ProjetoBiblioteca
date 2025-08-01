@@ -1,7 +1,8 @@
 package org.example.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,25 +15,45 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 public class Produto {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Size(max = 60,message = "Numero máximo de caracteres atingidos")
     private String nome;
+    @Size(max = 60,message = "Numero máximo de caracteres atingidos")
     private String descricao;
+    @Size(max = 50,message = "Numero máximo de caracteres atingidos")
     private Long codigo_barras;
+    @Size(max = 20,message = "Numero máximo de caracteres atingidos")
     private String referencia;
+    @Size(max = 20,message = "Numero máximo de caracteres atingidos")
     private String unidade_medida;
+    @Size(max = 20,message = "Numero máximo de caracteres atingidos")
     private String marca;
+    @Size(max = 20,message = "Numero máximo de caracteres atingidos")
     private String categoria;
+    @Size(max = 20,message = "Numero máximo de caracteres atingidos")
     private Double preco_custo;
+    @Size(max = 20,message = "Numero máximo de caracteres atingidos")
     private Double preco_venda;
+    @Size(max = 20,message = "Numero máximo de caracteres atingidos")
     private Integer estoque_atual;
+    @Size(max = 20,message = "Numero máximo de caracteres atingidos")
     private Integer estoque_minimo;
+    @Size(max = 20,message = "Numero máximo de caracteres atingidos")
     private Integer estoque_maximo;
+    @Size(max = 20,message = "Numero máximo de caracteres atingidos")
     private String localizacao;
+    @Size(max = 20,message = "Numero máximo de caracteres atingidos")
     private Date data_validade;
+    @Size(max = 20,message = "Numero máximo de caracteres atingidos")
     private Long fornecedor_id;
+    @Size(max = 20,message = "Numero máximo de caracteres atingidos")
+    @NotBlank(message = "Insira se esta ativo ou não ativo")
     private boolean ativo;
+    @Size(max = 20,message = "Numero máximo de caracteres atingidos")
     private Date data_cadastro;
+    @Size(max = 20,message = "Numero máximo de caracteres atingidos")
     private String observacoes;
 
 
