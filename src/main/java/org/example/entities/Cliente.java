@@ -33,8 +33,9 @@ public class Cliente {
     @NotBlank(message = "insira sua data de nascimento")
     private Date data_nascimento;
     @NotBlank(message = "Insira seu sexo")
+    @Size(max = 100,message = "Limite de caracteres atingidos")
     private String sexo;
-
+    @Size(max = 6,message = "Limite de caracteres atingidos")
     private Date data_cadastro;
     @Size(max = 100,message = "Limite de caracteres atingidos")
     private String observacoes;

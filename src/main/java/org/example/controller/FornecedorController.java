@@ -22,7 +22,7 @@ public class FornecedorController {
         return  ResponseEntity.ok().body(lista);
     }
 
-    @GetMapping("/{id")
+    @GetMapping("/{id}")
     public ResponseEntity<Fornecedor> findById(@PathVariable Long id){
         Fornecedor Fornecedor = service.findByID(id);
         return ResponseEntity.ok().body(Fornecedor);

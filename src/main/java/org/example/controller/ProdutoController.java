@@ -21,7 +21,7 @@ public class ProdutoController {
         return ResponseEntity.ok().body(lista);
     }
 
-    @GetMapping("/{id")
+    @GetMapping("/{id}")
     public ResponseEntity<Produto> findByid(@PathVariable Long id) {
         Produto produto = service.findByID(id);
         return ResponseEntity.ok().body(produto);
