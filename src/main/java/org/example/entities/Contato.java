@@ -1,36 +1,43 @@
 package org.example.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "CONTATO")
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "CONTATO")
 public class Contato {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Size(max = 8,message = "Máximo de caracteres atingidos")
-    private String telefone;
-    @Size(max = 9,message = "Máximo de caracteres atingidos")
-    @NotBlank(message = "Insira seu numero de celular")
-    private String celular;
-    @Size(max = 120,message = "Máximo de caracteres atingidos")
-    @NotBlank(message = "Coloque seu email")
-    private String email;
+    @Column(name = "CON_ID")
+    private Long conId;
 
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "CON_CLI_ID")
+    private Cliente conCliente;
 
-    public Contato(Long id, String telefone, String celular, String email) {
-        this.id = id;
-        this.telefone = telefone;
-        this.celular = celular;
-        this.email = email;
+    @Column(name = "CON_CELULAR", length = 15)
+    private String conCelular;
+
+    @Column(name = "CON_TELEFONE_COMERCIAL", length = 15)
+    private String conTelefoneComercial;
+
+    @Column(length = 55, name = "CON_EMAIL")
+    private String conEmail;
+
+    public Contato(Long conId, Cliente conCliente, String conCelular, String conTelefoneComercial, String conEmail) {
+        this.conId = conId;
+        this.conCliente = conCliente;
+        this.conCelular = conCelular;
+        this.conTelefoneComercial = conTelefoneComercial;
+        this.conEmail = conEmail;
     }
+
 }

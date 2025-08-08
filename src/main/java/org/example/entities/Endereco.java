@@ -1,47 +1,53 @@
 package org.example.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "ENDERECO")
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "ENDERECO")
 public class Endereco {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Size(max = 100,message = "Numero máximo de caracteres atingidos")
-    @NotBlank(message = "Coloque uma rua")
-    private String rua;
-    @Size(max = 6, message = "Numero máximo de caracteres atingidos")
-    @NotBlank(message = "Insira o numero da rua")
-    private String numero;
-    @Size(max = 75,message = "Numero máximo de caracteres atingidos")
-    @NotBlank(message = "Insira um bairro")
-    private String bairro;
-    @Size(max = 60,message = "Numero máximo de caracteres atingidos")
-    @NotBlank(message = "Coloque uma cidade")
-    private String cidade;
-    @Size(max = 50,message = "Numero máximo de caracteres atingidos")
-    @NotBlank(message = "Insira seu estado")
-    private String estado;
-    @Size(max = 8,message = "Numero máximo de caracteres atingidos")
-    @NotBlank(message = "Insira seu cep")
-    private String cep;
+    @Column(name = "END_ID")
+    private Long endId;
 
-    public Endereco(Long id, String rua, String numero, String bairro, String cidade, String estado, String cep) {
-        this.id = id;
-        this.rua = rua;
-        this.numero = numero;
-        this.bairro = bairro;
-        this.cidade = cidade;
-        this.estado = estado;
-        this.cep = cep;
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "END_CLI_ID")
+    private Cliente endCliente;
+
+    @Column(name = "END_RUA")
+    private String endRua;
+
+    @Column(name = "END_NUMERO")
+    private String endNumero;
+
+    @Column(name = "END_CIDADE")
+    private String endCidade;
+
+    @Column(name = "END_CEP", length = 9)
+    private String endCep;
+
+    @Column(name = "END_ESTADO", length = 2)
+    private String endEstado;
+
+    public Endereco(Long endId, Cliente endCliente,  String endRua, String endNumero, String endCidade, String endCep, String endEstado) {
+        this.endId = endId;
+        this.endCliente = endCliente;
+        this.endRua = endRua;
+        this.endNumero = endNumero;
+        this.endCidade = endCidade;
+        this.endCep = endCep;
+        this.endEstado = endEstado;
     }
 }

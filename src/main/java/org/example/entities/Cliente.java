@@ -6,54 +6,44 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.boot.autoconfigure.web.WebProperties;
+import org.hibernate.validator.constraints.br.CPF;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(name = "CLIENTE")
+
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "CLIENTE")
 public class Cliente {
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
 
-    @Size(max = 60, message = "O numero maximo de caracteres de 60 foi atingido")
-    @NotBlank(message = "Insira o nome")
-    private String nome;
-    @Size(max = 14,message = "Voce atingiu o limite de caracteres")
-    @NotBlank(message = "Insira o CPF")
-    private String cpf;
-    @Size(max = 11,message = "Voce atingiu o limite de caracteres")
-    @NotBlank(message = "Insira o Rg")
-    private String rg;
-    @Size(max = 6,message = "Limite de numeros atingidos")
-    @NotBlank(message = "insira sua data de nascimento")
-    private Date data_nascimento;
-    @NotBlank(message = "Insira seu sexo")
-    @Size(max = 100,message = "Limite de caracteres atingidos")
-    private String sexo;
-    @Size(max = 6,message = "Limite de caracteres atingidos")
-    private Date data_cadastro;
-    @Size(max = 100,message = "Limite de caracteres atingidos")
-    private String observacoes;
-    @Size(max = 20,message = "Numero máximo de caracteres atingidos")
-    @NotBlank(message = "Insira se esta ativo ou não ativo")
-    private boolean ativo;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "CLI_ID")
+    private Long cliId;
 
+    @OneToMany(mappedBy = "endCliente", cascade = CascadeType.ALL)
+    private List<Endereco> enderecos = new ArrayList<>();
 
+    @OneToMany(mappedBy = "conCliente", cascade = CascadeType.ALL)
+    private List<Contato> contatos = new ArrayList<>();
 
-    public Cliente( String nome, String cpf, String rg, Date data_nascimento, String sexo, Date data_cadastro, String observacoes, boolean ativo) {
-        this.nome = nome;
-        this.cpf = cpf;
-        this.rg = rg;
-        this.data_nascimento = data_nascimento;
-        this.sexo = sexo;
-        this.data_cadastro = data_cadastro;
-        this.observacoes = observacoes;
-        this.ativo = ativo;
+    @NotBlank(message = "Nome é obrigatório")
+    @Size(max = 100, message = "Nome deve ter no máximo 100 caracteres")
+    @Column(name = "CLI_NOME", nullable = false, length = 100)
+    private String cliNome;
+
+    @NotBlank(message = "CPF é obrigatório")
+    @CPF(message = "CPF inválido")
+    @Column(name = "CLI_CPF", nullable = false, unique = true, length = 15)
+    private String cliCpf;
+
+    public Cliente(Long cliId, String cliNome, String cliCpf) {
+        this.cliId = cliId;
+        this.cliNome = cliNome;
+        this.cliCpf = cliCpf;
     }
 
 }

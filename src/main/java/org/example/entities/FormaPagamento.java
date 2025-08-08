@@ -22,20 +22,20 @@ public class FormaPagamento {
     @Size(max = 50,message = "Numero máximo de caracteres atingidos")
     @NotBlank(message = "Insira o tipo do pagamento")
     private String tipo;
-    @Size(max = 4,message = "Numero máximo de caracteres atingidos")
+
     private Long numero_parcelas;
-    @Size(max = 3,message = "Numero máximo de caracteres atingidos")
+
     private Integer dias_entre_parcelas;
     @Size(max = 20,message = "Numero máximo de caracteres atingidos")
     @NotBlank(message = "Insira se vai permitir troco ou não")
-    private boolean permite_troco;
-    @Size(max = 10,message = "Numero máximo de caracteres atingidos")
-    private  Double taxa_percentual;
+    private String permite_troco;
+
+    private Double taxa_percentual;
     @Size(max = 20,message = "Numero máximo de caracteres atingidos")
     @NotBlank(message = "Insira se esta ativo ou não ativo")
-    private boolean ativo;
+    private String ativo;
 
-    public FormaPagamento(String descicao, String tipo, Long numero_parcelas, Integer dias_entre_parcelas, boolean permite_troco, Double taxa_percentual, boolean ativo) {
+    public FormaPagamento(String descicao, String tipo, Long numero_parcelas, Integer dias_entre_parcelas, String permite_troco, Double taxa_percentual, String ativo) {
         this.descicao = descicao;
         this.tipo = tipo;
         this.numero_parcelas = numero_parcelas;
