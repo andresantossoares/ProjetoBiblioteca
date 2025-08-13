@@ -2,13 +2,14 @@ package org.example.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.br.CNPJ;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "FORNECEDOR")
@@ -19,44 +20,47 @@ public class Fornecedor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "For_Id")
+    private Long forId;
 
-    @Size(max = 100, message = "Número máximo de caracteres atingidos")
-    @NotBlank(message = "Insira a razão social")
-    private String razao_social;
+    @OneToMany(mappedBy = "endFornecedor", cascade = CascadeType.ALL)
+    private java.util.List<Endereco> enderecos = new ArrayList<>();
 
-    @Size(max = 60, message = "Número máximo de caracteres atingidos")
-    private String nome_fantasia;
+    @OneToMany(mappedBy = "conFornecedor", cascade = CascadeType.ALL)
+    private List<Contato> contatos = new ArrayList<>();
 
-    @Size(max = 14, message = "Número máximo de caracteres atingidos")
-    @NotBlank(message = "Insira o CNPJ")
-    private String cnpj;
+    @OneToMany(mappedBy = "liFornecedor", cascade = CascadeType.ALL)
+    private List<Livro> livros = new ArrayList<>();
 
-    @Size(max = 14, message = "Número máximo de caracteres atingidos")
-    @NotBlank(message = "Insira a inscrição estadual")
-    private String inscricao_estadual;
+    @NotBlank(message = "Nome fantasia é obrigatório")
+    @Size(max = 100, message = "Nome deve ter no máximo 100 caracteres")
+    @Column(name = "FOR_NOME_FANTASIA", nullable = false, length = 100)
+    private String forNomeFantasia;
 
-    @Size(max = 15, message = "Número máximo de caracteres atingidos")
-    @NotBlank(message = "Insira a inscrição municipal")
-    private String inscricao_municipal;
+    @NotBlank(message = "CNPJ é obrigatório")
+    @CNPJ(message = "CNPJ inválido")
+    @Column(name = "FOR_CNPJ", nullable = false, unique = true, length = 18)
+    private String forCnpj;
 
-    @Temporal(TemporalType.DATE)
-    private Date data_cadastro;
+    @NotBlank(message = "Razão social é obrigatório")
+    @Size(max = 100, message = "Razão social deve ter no máximo 100 caracteres")
+    @Column(name = "FOR_RAZAO_SOCIAL", nullable = false, length = 100)
+    private String forRazaoSocial;
 
-    @Size(max = 150, message = "Número máximo de caracteres atingidos")
-    private String observacoes;
+    public Fornecedor(Long forId, String forNomeFantasia, String forCnpj, String forRazaoSocial) {
+        this.forId = forId;
+        this.forNomeFantasia = forNomeFantasia;
+        this.forCnpj = forCnpj;
+        this.forRazaoSocial = forRazaoSocial;
+    }
 
-    @NotNull(message = "Informe se está ativo")
-    private Boolean ativo;
-
-    public Fornecedor(String razao_social, String nome_fantasia, String cnpj, String inscricao_estadual, String inscricao_municipal, Date data_cadastro, String observacoes, Boolean ativo) {
-        this.razao_social = razao_social;
-        this.nome_fantasia = nome_fantasia;
-        this.cnpj = cnpj;
-        this.inscricao_estadual = inscricao_estadual;
-        this.inscricao_municipal = inscricao_municipal;
-        this.data_cadastro = data_cadastro;
-        this.observacoes = observacoes;
-        this.ativo = ativo;
+    public Fornecedor(Long forId, List<Endereco> enderecos, List<Contato> contatos, List<Livro> livros, String forNomeFantasia, String forCnpj, String forRazaoSocial) {
+        this.forId = forId;
+        this.enderecos = enderecos;
+        this.contatos = contatos;
+        this.livros = livros;
+        this.forNomeFantasia = forNomeFantasia;
+        this.forCnpj = forCnpj;
+        this.forRazaoSocial = forRazaoSocial;
     }
 }

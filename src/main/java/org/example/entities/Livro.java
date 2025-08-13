@@ -1,5 +1,6 @@
 package org.example.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -15,13 +16,17 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Livro {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "LI_ID")
     private Long liId;
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "li_for_id")
+    private Fornecedor liFornecedor;
+
     @NotBlank(message = "Insira o nome do livro")
     @Size(max = 100, message = "O nome do livro excedeu o limite de caracteres")
     @Column(name = "LI_NOME")
@@ -30,29 +35,35 @@ public class Livro {
     @Size(max = 400, message = "A descrição do livro excedeu o limite de caracteres")
     @Column(name = "LI_DESC")
     private String liDescricao;
-    private Long liPreco;
     @NotBlank(message = "Insira a Avaliação do livro")
     @Size(max = 30, message = "A avaliação do livro excedeu o limite de caracteres")
     @Column(name = "LI_AVALIA")
     private String liAvaliacao;
-    @NotBlank(message = "Insira a Editora do livro")
-    @Size(max = 30, message = "A Editora do livro excedeu o limite de caracteres")
-    @Column(name = "LI_EDIT")
-    private String liEditora;
     private Integer liNumeropagi;
-    @NotBlank(message = "Insira a Linguagem do livro")
+
     @Size(max = 30, message = "A Linguagem do livro excedeu o limite de caracteres")
     @Column(name = "LI_IDIOMA")
     private String liIdioma;
     private Date liDataPubli;
-    @NotBlank(message = "Insira as Dimensões do livro")
+
     @Size(max = 70, message = "As Dimensões do livro excedeu o limite de caracteres")
     @Column(name = "LI_DIMENSOES")
     private String liDimensoes;
-    @NotBlank(message = "Insira o nome do autor do livro")
+
     @Size(max = 100, message = "O nome do autor do livro excedeu o limite de caracteres")
     @Column(name = "LI_AUTOR")
     private String liAutor;
 
-
+    public Livro(Long liId, Fornecedor liFornecedor, String liNome, String liDescricao, String liAvaliacao, Integer liNumeropagi, String liIdioma, Date liDataPubli, String liDimensoes, String liAutor) {
+        this.liId = liId;
+        this.liFornecedor = liFornecedor;
+        this.liNome = liNome;
+        this.liDescricao = liDescricao;
+        this.liAvaliacao = liAvaliacao;
+        this.liNumeropagi = liNumeropagi;
+        this.liIdioma = liIdioma;
+        this.liDataPubli = liDataPubli;
+        this.liDimensoes = liDimensoes;
+        this.liAutor = liAutor;
+    }
 }

@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import org.example.dto.LivroDTO;
 import org.example.entities.Livro;
 import org.example.services.LivroService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,32 +23,31 @@ public class LivroController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Livro> findById(@PathVariable Long id) {
-        return service.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        Livro livro = service.findById(id);
+        return ResponseEntity.ok(livro);
     }
 
     @PostMapping
-    public ResponseEntity<Livro> create(@RequestBody Livro livro) {
-        Livro novoLivro = service.save(livro);
+    public ResponseEntity<Livro> create(@RequestBody LivroDTO livroDto) {
+        Livro livro = service.fromDTO(livroDto);
+        Livro novoLivro = service.insert(livro);
         return ResponseEntity.ok(novoLivro);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Livro> update(@PathVariable Long id, @RequestBody Livro livro) {
+    public ResponseEntity<Livro> update(@PathVariable Long id, @RequestBody LivroDTO livroDto) {
         try {
-            Livro livroAtualizado = service.update(id, livro);
+            Livro livroAtualizado = service.update(id, livroDto);
             return ResponseEntity.ok(livroAtualizado);
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
     }
 
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
-            service.deleteById(id);
+            service.deleteLivro(id);
             return ResponseEntity.noContent().build();
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();

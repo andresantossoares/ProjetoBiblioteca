@@ -49,25 +49,24 @@ public class ClienteService {
     public Cliente update(Long id, ClienteDTO objDto) {
         try {
             Cliente entity = findById(id);
-            // Atualiza os dados do cliente
             entity.setCliNome(objDto.getCliNome());
             entity.setCliCpf(objDto.getCliCpf());
 
-            // Atualiza o endereço do cliente
-            Endereco endereco = entity.getEnderecos().get(0); // Assumindo que há apenas um endereço por cliente
+
+            Endereco endereco = entity.getEnderecos().get(0);
             endereco.setEndRua(objDto.getEndRua());
             endereco.setEndNumero(objDto.getEndNumero());
             endereco.setEndCidade(objDto.getEndCidade());
             endereco.setEndCep(objDto.getEndCep());
             endereco.setEndEstado(objDto.getEndEstado());
 
-            // Atualiza o contato
-            Contato contato = entity.getContatos().get(0); // Assumindo que há apenas um contato por cliente
+
+            Contato contato = entity.getContatos().get(0);
             contato.setConCelular(objDto.getConCelular());
             contato.setConTelefoneComercial(objDto.getConTelefoneComercial());
             contato.setConEmail(objDto.getConEmail());
 
-            // Salva as alterações
+
             repository.save(entity);
 
             return entity;
@@ -104,12 +103,10 @@ public class ClienteService {
     public ClienteDTO toNewDTO(Cliente obj) {
         ClienteDTO dto = new ClienteDTO();
 
-        // Mapeie os atributos comuns entre Cliente e ClienteNewDTO
         dto.setCliId(obj.getCliId());
         dto.setCliNome(obj.getCliNome());
         dto.setCliCpf(obj.getCliCpf());
 
-        // Atributos específicos de Endereco
         Endereco endereco = obj.getEnderecos().get(0);
         dto.setEndRua(endereco.getEndRua());
         dto.setEndNumero(endereco.getEndNumero());
@@ -117,7 +114,7 @@ public class ClienteService {
         dto.setEndCep(endereco.getEndCep());
         dto.setEndEstado(endereco.getEndEstado());
 
-        // Atributos específicos de Contato
+
         Contato contato = obj.getContatos().get(0);
         dto.setConCelular(contato.getConCelular());
         dto.setConTelefoneComercial(contato.getConTelefoneComercial());
