@@ -28,8 +28,8 @@ public class FormaPagamentoService {
 
     public FormaPagamento update(Long id, FormaPagamento novaFormaPagamento) {
         FormaPagamento exeistence = findByID(id);
-        exeistence.setDescicao(novaFormaPagamento.getDescicao());
-        exeistence.setDescicao(novaFormaPagamento.getTipo());
+        exeistence.setDescricao(novaFormaPagamento.getDescricao());
+        exeistence.setDescricao(novaFormaPagamento.getTipo());
         exeistence.setTaxa_percentual(novaFormaPagamento.getTaxa_percentual());
         exeistence.setDias_entre_parcelas(novaFormaPagamento.getDias_entre_parcelas());
         exeistence.setNumero_parcelas(novaFormaPagamento.getNumero_parcelas());

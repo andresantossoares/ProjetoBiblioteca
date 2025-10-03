@@ -18,7 +18,7 @@ public class FormaPagamento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Size(max = 150,message = "Numero máximo de caracteres atingidos")
-    private String descicao;
+    private String descricao;
     @Size(max = 50,message = "Numero máximo de caracteres atingidos")
     @NotBlank(message = "Insira o tipo do pagamento")
     private String tipo;
@@ -35,8 +35,8 @@ public class FormaPagamento {
     @NotBlank(message = "Insira se esta ativo ou não ativo")
     private String ativo;
 
-    public FormaPagamento(String descicao, String tipo, Long numero_parcelas, Integer dias_entre_parcelas, String permite_troco, Double taxa_percentual, String ativo) {
-        this.descicao = descicao;
+    public FormaPagamento(String descricao, String tipo, Long numero_parcelas, Integer dias_entre_parcelas, String permite_troco, Double taxa_percentual, String ativo) {
+        this.descricao = descricao;
         this.tipo = tipo;
         this.numero_parcelas = numero_parcelas;
         this.dias_entre_parcelas = dias_entre_parcelas;
