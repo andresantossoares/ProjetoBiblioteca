@@ -44,4 +44,5 @@ public class FormaPagamento {
         this.taxa_percentual = taxa_percentual;
         this.ativo = ativo;
     }
+
 }

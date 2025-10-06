@@ -1,15 +1,14 @@
 package org.example.controller;
 
-import org.apache.coyote.Response;
 import org.example.entities.FormaPagamento;
 import org.example.services.FormaPagamentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.Normalizer;
 import java.util.List;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/formapagamento")
 public class FormaPagamentoController {
