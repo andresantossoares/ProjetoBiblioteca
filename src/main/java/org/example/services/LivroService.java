@@ -3,7 +3,6 @@ package org.example.services;
 import org.example.dto.LivroDTO;
 import org.example.entities.Fornecedor;
 import org.example.entities.Livro;
-import org.example.repositories.EnderecoRepository;
 import org.example.repositories.FornecedorRepository;
 import org.example.repositories.LivroRepository;
 import org.example.services.exeptions.ResourceNotFoundException;
@@ -24,7 +23,6 @@ public class LivroService {
 
     @Autowired
     private FornecedorRepository fornecedorRepository;
-    
 
     public List<Livro> findAll() {
         return livroRepository.findAll();
@@ -37,23 +35,31 @@ public class LivroService {
 
     public Livro insert(Livro obj) {
         try {
-            obj.setLiId(null);
+            obj.setLiId(null); // garante que o livro será criado como novo
 
-            // Salva o fornecedor primeiro
             if (obj.getLiFornecedor() != null) {
-                Fornecedor fornecedorSalvo = fornecedorRepository.save(obj.getLiFornecedor());
-                obj.setLiFornecedor(fornecedorSalvo);
+                String cnpj = obj.getLiFornecedor().getForCnpj();
+
+                // Verifica se já existe um fornecedor com o mesmo CNPJ
+                Optional<Fornecedor> fornecedorExistente = fornecedorRepository.findByForCnpj(cnpj);
+
+                if (fornecedorExistente.isPresent()) {
+                    // Usa o fornecedor já existente
+                    obj.setLiFornecedor(fornecedorExistente.get());
+                } else {
+                    // Salva novo fornecedor
+                    Fornecedor novoFornecedor = fornecedorRepository.save(obj.getLiFornecedor());
+                    obj.setLiFornecedor(novoFornecedor);
+                }
             }
 
-            // Agora salva o livro
-            obj = livroRepository.save(obj);
+            // Agora salva o livro com o fornecedor já tratado
+            return livroRepository.save(obj);
 
-            return obj;
         } catch (DataIntegrityViolationException e) {
-            throw new ValueBigForAtributeException(e.getMessage());
+            throw new ValueBigForAtributeException("Erro ao salvar livro ou fornecedor: " + e.getMessage());
         }
     }
-
 
     public Livro update(Long id, LivroDTO objDto) {
         try {
@@ -72,6 +78,9 @@ public class LivroService {
             fornecedor.setForNomeFantasia(objDto.getForNomeFantasia());
             fornecedor.setForCnpj(objDto.getForCnpj());
             fornecedor.setForRazaoSocial(objDto.getForRazaoSocial());
+
+            // Atualiza fornecedor no banco
+            fornecedorRepository.save(fornecedor);
 
             return livroRepository.save(entity);
         } catch (DataIntegrityViolationException e) {
