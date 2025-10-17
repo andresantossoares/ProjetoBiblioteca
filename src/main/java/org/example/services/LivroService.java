@@ -68,7 +68,7 @@ public class LivroService {
             entity.setLiNome(objDto.getLiNome());
             entity.setLiDescricao(objDto.getLiDescricao());
             entity.setLiAvaliacao(objDto.getLiAvaliacao());
-            entity.setLiNumeropagi(objDto.getLiNumeropagi());
+            entity.setLiNumeroPagi(objDto.getLiNumeropagi());
 
             if (entity.getLiFornecedor() == null) {
                 entity.setLiFornecedor(new Fornecedor());
@@ -102,7 +102,7 @@ public class LivroService {
         livro.setLiNome(objDto.getLiNome());
         livro.setLiDescricao(objDto.getLiDescricao());
         livro.setLiAvaliacao(objDto.getLiAvaliacao());
-        livro.setLiNumeropagi(objDto.getLiNumeropagi());
+        livro.setLiNumeroPagi(objDto.getLiNumeropagi());
 
         Fornecedor fornecedor = new Fornecedor();
         fornecedor.setForId(null);
@@ -122,7 +122,7 @@ public class LivroService {
         dto.setLiNome(obj.getLiNome());
         dto.setLiDescricao(obj.getLiDescricao());
         dto.setLiAvaliacao(obj.getLiAvaliacao());
-        dto.setLiNumeropagi(obj.getLiNumeropagi());
+        dto.setLiNumeropagi(obj.getLiNumeroPagi());
 
         if (obj.getLiFornecedor() != null) {
             dto.setForNomeFantasia(obj.getLiFornecedor().getForNomeFantasia());
