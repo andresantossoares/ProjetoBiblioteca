@@ -34,13 +34,21 @@ public class ClienteService {
         return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
+    // MÉTODO INSERT CORRIGIDO
     public Cliente insert(Cliente obj) {
         try {
+            // Garante que é uma nova entidade.
             obj.setCliId(null);
-            obj = repository.save(obj);
-            enderecoRepository.saveAll(obj.getEnderecos());
-            return obj;
+
+            // O CascadeType.ALL na entidade Cliente garante que Endereco e Contato
+            // sejam salvos junto.
+            return repository.save(obj);
+
+            // Linha enderecoRepository.saveAll(obj.getEnderecos()); REMOVIDA.
+
         } catch (DataIntegrityViolationException e) {
+            // Este catch deve ser expandido no futuro para capturar e
+            // informar ao usuário se o problema foi CPF duplicado, por exemplo.
             throw new ValueBigForAtributeException(e.getMessage());
         }
 

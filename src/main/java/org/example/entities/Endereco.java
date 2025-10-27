@@ -40,7 +40,7 @@ public class Endereco {
     @Column(name = "END_CEP", length = 9)
     private String endCep;
 
-    @Column(name = "END_ESTADO", length = 2)
+    @Column(name = "END_ESTADO", length = 124)
     private String endEstado;
 
 

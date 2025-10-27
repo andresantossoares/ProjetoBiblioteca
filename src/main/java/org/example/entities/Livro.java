@@ -13,18 +13,13 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
+
 public class Livro {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "LI_ID")
     private Long liId;
-
-    @ManyToOne
-    @JoinColumn(name = "LI_FOR_ID", nullable = false)
-    @JsonIgnore // evita recursão infinita com Fornecedor → Livro → Fornecedor
-    private Fornecedor liFornecedor;
 
     @NotBlank(message = "Insira o nome do livro")
     @Size(max = 100, message = "O nome do livro excedeu o limite de caracteres")
@@ -59,4 +54,16 @@ public class Livro {
     @Size(max = 100, message = "O nome do autor excedeu o limite de caracteres")
     @Column(name = "LI_AUTOR", length = 100)
     private String liAutor;
+
+    public Livro(Long liId, String liNome, String liDescricao, String liAvaliacao, Integer liNumeroPagi, String liIdioma, Date liDataPubli, String liDimensoes, String liAutor) {
+        this.liId = liId;
+        this.liNome = liNome;
+        this.liDescricao = liDescricao;
+        this.liAvaliacao = liAvaliacao;
+        this.liNumeroPagi = liNumeroPagi;
+        this.liIdioma = liIdioma;
+        this.liDataPubli = liDataPubli;
+        this.liDimensoes = liDimensoes;
+        this.liAutor = liAutor;
+    }
 }

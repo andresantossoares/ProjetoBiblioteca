@@ -54,13 +54,4 @@ public class Fornecedor {
         this.forRazaoSocial = forRazaoSocial;
     }
 
-    public Fornecedor(Long forId, List<Endereco> enderecos, List<Contato> contatos, List<Livro> livros, String forNomeFantasia, String forCnpj, String forRazaoSocial) {
-        this.forId = forId;
-        this.enderecos = enderecos;
-        this.contatos = contatos;
-        this.livros = livros;
-        this.forNomeFantasia = forNomeFantasia;
-        this.forCnpj = forCnpj;
-        this.forRazaoSocial = forRazaoSocial;
-    }
 }
